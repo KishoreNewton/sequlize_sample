@@ -2,13 +2,18 @@ import { Sequelize } from 'sequelize';
 import { app } from './app'; // express config
 import { port } from './common/common.constant';
 
+export const sequelize = new Sequelize(
+  process.env.PROJECT_DB_NAME,
+  process.env.PROJECT_DB_USERNAME,
+  process.env.PROJECT_DB_PASSWORD,
+  {
+    host: process.env.PROJECT_HOST,
+    dialect: 'mysql'
+  }
+);
+
 const start = async () => {
   console.log('starting up.....');
-
-  const sequelize = new Sequelize('database', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'mysql'
-  });
 
   if (!process.env.JWT_KEY) {
     throw new Error('Key Missing. Key Required');
